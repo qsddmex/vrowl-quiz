@@ -49,8 +49,8 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-        <v-card v-else>
-          TERMINOU  A PROVA DISGRAÇAAAA
+        <v-card v-else class="pa-6">
+          PROVA FINALIZADA
         </v-card>
       </v-col>
     </v-row>
@@ -93,13 +93,9 @@ const nextQuestion = () => {
 
 const finishQuiz = async () => {
   try {
-    const response = await axios.post('http://localhost:3000/api/answers', completeAnswers.value);
+    await axios.post('http://localhost:3000/api/answers', completeAnswers.value);
 
-    if (response.status === 201) {
-      finished.value = true;
-    } else {
-      throw new Error('Não foi possivel criar');
-    }
+    finished.value = true;
   } catch (error) {
     console.log('Erro ao finalizar prova', error);
   }
