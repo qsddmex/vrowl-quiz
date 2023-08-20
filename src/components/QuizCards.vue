@@ -2,7 +2,7 @@
   <v-container fluid class="fill-height">
     <v-row align="center" justify="center">
       <v-col cols="12" sm="12" md="12">
-        <v-card v-if="!finished">
+        <v-card>
           <v-window v-model="currentStep">
             <v-window-item
               v-for="(question, index) in questions"
@@ -49,9 +49,6 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-        <v-card v-else class="pa-6">
-          PROVA FINALIZADA
-        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -70,7 +67,8 @@ const currentStep = ref(0);
 const currentQuestion = ref(questions.value[currentStep.value]);
 const selectedAlternativeId = ref(null);
 const completeAnswers = ref([]);
-const finished = ref(false);
+
+const emit = defineEmits(['quiz-success']);
 
 const isLastQuestion = computed(() => {
   return currentStep.value < questions.value.length - 1;
@@ -95,7 +93,7 @@ const finishQuiz = async () => {
   try {
     await axios.post('http://localhost:3000/api/answers', completeAnswers.value);
 
-    finished.value = true;
+    emit('quiz-success');
   } catch (error) {
     console.log('Erro ao finalizar prova', error);
   }
