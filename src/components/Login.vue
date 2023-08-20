@@ -56,11 +56,10 @@ const codeRules = [
 async function fetchQuiz() {
   try {
     const params = {
-      invite_code: inviteCode.value,
       student_name: studentName.value
     };
 
-    const response = await axios.get('https://meu-server.com/api/quizzes', params);
+    const response = await axios.get(`http://localhost:3000/api/quizzes/${inviteCode.value}`, params);
 
     quizStore.setQuestions(response.data.questions);
     quizStore.setStudentId(response.data.student_id)

@@ -10,7 +10,7 @@
               :value="index"
             >
               <v-card-title class="text-h6 font-weight-regular text-wrap">
-                {{ currentQuestion.enunciation }}
+                {{ currentQuestion.statement }}
               </v-card-title>
 
               <v-card-text>
@@ -18,7 +18,7 @@
                   v-for="alternative in currentQuestion.alternatives"
                   :key="alternative.alternative_id"
                   v-model="selectedAlternativeId"
-                  :label="alternative.value"
+                  :label="alternative.text"
                   :value="alternative.alternative_id"
                 ></v-checkbox>
               </v-card-text>
@@ -93,7 +93,7 @@ const nextQuestion = () => {
 
 const finishQuiz = async () => {
   try {
-    const response = await axios.post('http://meu-server.com/api/answers', completeAnswers.value);
+    const response = await axios.post('http://localhost:3000/api/answers', completeAnswers.value);
 
     if (response.status === 201) {
       finished.value = true;
